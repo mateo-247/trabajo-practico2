@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Counter-Strike </title>
+    <link rel="stylesheet" href="./src/style.css">
+    <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+<body>
+    <header class="cabecera">
+        <h1>Mercado de Skins</h1>
+        <nav class="navegacion">
+            <a href="index.html" class="activo">Catálogo</a>
+            <a href="inventario.html">Mi Inventario</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="contenedor-banner">
+            <img src="/vitality-campeon.jpg" alt="Team Vitality Campeón" class="banner-equipo">
+            <div class="banner-texto">
+                <h2>Arma tu inventario como lo hacen <span class="texto-resaltado">los mejores del mundo</span></h2>
+            </div>
+        </div>
+
+        <section class="controles">
+            <input type="text" id="buscador" placeholder="Buscar skin (ej: M4A4 || HOWL)">
+            
+            <select id="filtro-arma">
+                <option value="todas">Todas las armas</option>
+            </select>
+
+            <select id="ordenar">
+                <option value="defecto">Ordenar por...</option>
+                <option value="az">Nombre (A - Z)</option>
+                <option value="za">Nombre (Z - A)</option>
+            </select>
+        </section>
+
+        <section id="contenedor-skins" class="grilla-skins">
+            </section>
+     
+    </main>
+
+
+    <div id="modal-inspeccionar" class="modal-oculto">
+            <span class="cerrar-modal">&times;</span>
+            <img id="imagen-modal" src="" alt="Arma en detalle">
+        </div>
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>
