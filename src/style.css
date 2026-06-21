@@ -1,4 +1,6 @@
-
+/* ==========================================================================
+   ESTILOS GENERALES Y BASE (EL QUE ANDABA BIEN)
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -11,17 +13,17 @@ body {
     color: #ffffff;
 }
 
-
+/* --- BANNER DE VITALITY --- */
 .banner-equipo {
     width: 100%;
-    height: 650px; 
+    height: 600px; 
     object-fit: cover;
     object-position: center top;
     display: block;
     filter: brightness(0.35); 
 }
 
-
+/* --- CONTENEDOR PRINCIPAL --- */
 #contenedor-skins {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -31,7 +33,7 @@ body {
     margin: 0 auto;
 }
 
-
+/* --- TARJETAS --- */
 .tarjeta-skin {
     background-color: #1e1e1e;
     border: 1px solid #333;
@@ -52,7 +54,7 @@ body {
     max-height: 150px;
     object-fit: contain;
     margin-bottom: 15px;
-    cursor: zoom-in; 
+    cursor: zoom-in;
 }
 
 .tarjeta-skin h3 {
@@ -70,7 +72,6 @@ body {
     margin-bottom: 15px;
 }
 
-
 .etiqueta-desgaste {
     display: inline-block;
     background-color: #2a2a2a;
@@ -83,10 +84,10 @@ body {
     margin-bottom: 15px;
 }
 
-
+/* --- BOTÓN --- */
 .btn-agregar {
     width: 100%;
-    background-color: #de9b35; 
+    background-color: #de9b35;
     color: #000;
     border: none;
     padding: 10px;
@@ -100,7 +101,7 @@ body {
     background-color: #f5b041;
 }
 
-
+/* --- MODAL --- */
 .modal-oculto {
     display: none;
 }
@@ -133,30 +134,18 @@ body {
     font-size: 50px;
     font-weight: bold;
     cursor: pointer;
-    transition: color 0.2s;
 }
 
 .cerrar-modal:hover {
     color: #ffffff;
 }
 
-
+/* ==========================================================================
+   UNA SOLA REGLA PARA PANTALLAS CHICAS (CELUS Y TABLETS JUNTOS)
+   ========================================================================== */
 @media (max-width: 768px) {
     .banner-equipo {
-        height: 350px; 
-    }
-
-    #contenedor-skins {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        padding: 20px;
-    }
-}
-
-
-@media (max-width: 480px) {
-    .banner-equipo {
-        height: 220px;
+        height: 250px; 
     }
 
     #contenedor-skins {
