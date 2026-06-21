@@ -9,28 +9,28 @@ async function obtenerDatosAPI() {
     try {
         contenedorSkins.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #de9b35;">Cargando arsenal y stickers desde la base de datos...</p>';
 
-        // 1. Traemos las skins de las armas
+       
         const resSkins = await fetch('https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins.json');        
         if (!resSkins.ok) throw new Error('Fallo al cargar armas.');
         const datosSkins = await resSkins.json();
         
-        // 2. Traemos los stickers
+        
         const resStickers = await fetch('https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/stickers.json');
         if (!resStickers.ok) throw new Error('Fallo al cargar stickers.');
         const datosStickers = await resStickers.json();
 
-        // 3. Filtramos las armas
+        
         const armasQueQueremos = ["AK-47", "M4A4", "M4A1-S", "AWP", "Glock-18", "USP-S", "Desert Eagle", "★"];
         const skinsFiltradas = datosSkins.filter(skin => 
             armasQueQueremos.some(arma => skin.name.startsWith(arma))
         );
 
-        // 4. Filtramos los stickers de 9z
+        
         const stickers9z = datosStickers.filter(sticker => 
             sticker.name.toLowerCase().includes('9z')
         );
 
-        // 5. Unimos todo
+        
         todasLasSkins = [...skinsFiltradas, ...stickers9z];
 
         generarOpcionesArmas(todasLasSkins);
@@ -131,10 +131,10 @@ buscador.addEventListener('input', aplicarFiltros);
 filtroArma.addEventListener('change', aplicarFiltros);
 selectorOrdenar.addEventListener('change', aplicarFiltros);
 
-// Arrancamos todo
+
 obtenerDatosAPI();
 
-// --- LÓGICA DEL MODAL DE INSPECCIÓN ---
+
 const modal = document.getElementById('modal-inspeccionar');
 const imgModal = document.getElementById('imagen-modal');
 const btnCerrar = document.querySelector('.cerrar-modal');
