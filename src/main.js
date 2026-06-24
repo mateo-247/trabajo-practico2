@@ -1,36 +1,34 @@
 let todasLasSkins = [];
+let paginaActual = 1;
+const itemsPorPagina = 15; // Cantidad de armas por página
 
 const contenedorSkins = document.getElementById('contenedor-skins');
 const buscador = document.getElementById('buscador');
 const filtroArma = document.getElementById('filtro-arma');
 const selectorOrdenar = document.getElementById('ordenar');
+const contenedorPaginacion = document.getElementById('contenedor-paginacion');
 
 async function obtenerDatosAPI() {
     try {
         contenedorSkins.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #de9b35;">Cargando arsenal y stickers desde la base de datos...</p>';
 
-       
         const resSkins = await fetch('https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins.json');        
         if (!resSkins.ok) throw new Error('Fallo al cargar armas.');
         const datosSkins = await resSkins.json();
-        
         
         const resStickers = await fetch('https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/stickers.json');
         if (!resStickers.ok) throw new Error('Fallo al cargar stickers.');
         const datosStickers = await resStickers.json();
 
-        
         const armasQueQueremos = ["AK-47", "M4A4", "M4A1-S", "AWP", "Glock-18", "USP-S", "Desert Eagle", "★"];
         const skinsFiltradas = datosSkins.filter(skin => 
             armasQueQueremos.some(arma => skin.name.startsWith(arma))
         );
 
-        
         const stickers9z = datosStickers.filter(sticker => 
             sticker.name.toLowerCase().includes('9z')
         );
 
-        
         todasLasSkins = [...skinsFiltradas, ...stickers9z];
 
         generarOpcionesArmas(todasLasSkins);
@@ -45,12 +43,30 @@ async function obtenerDatosAPI() {
 function mostrarSkins(skins) {
     contenedorSkins.innerHTML = '';
 
+    // --- ANIMACIÓN DE TRANSICIÓN ---
+    contenedorSkins.classList.remove('animacion-fade'); 
+    void contenedorSkins.offsetWidth; 
+    contenedorSkins.classList.add('animacion-fade'); 
+    // -------------------------------
+
     if (skins.length === 0) {
         contenedorSkins.innerHTML = '<p style="color: #888; grid-column: 1 / -1; text-align: center;">No se encontraron skins con esos filtros.</p>';
+        contenedorPaginacion.innerHTML = '';
         return;
     }
 
-    skins.forEach(skin => {
+    const totalItems = skins.length;
+    const totalPaginas = Math.ceil(totalItems / itemsPorPagina);
+
+    if (paginaActual > totalPaginas) {
+        paginaActual = 1;
+    }
+
+    const inicio = (paginaActual - 1) * itemsPorPagina;
+    const fin = inicio + itemsPorPagina;
+    const skinsVisibles = skins.slice(inicio, fin);
+
+    skinsVisibles.forEach(skin => {
         const tipoArma = skin.name.split(' | ')[0];
         const tarjeta = document.createElement('div');
         tarjeta.className = 'tarjeta-skin';
@@ -58,7 +74,7 @@ function mostrarSkins(skins) {
         tarjeta.innerHTML = `
             <img src="${skin.image}" alt="${skin.name}">
             <h3>${skin.name}</h3>
-            <p>${tipoArma}</p>
+            <p>${tipoArma === "Sticker" ? "Pegatina" : tipoArma}</p>
             <button class="btn-agregar" data-id="${skin.id}">Agregar al inventario</button>
         `;
 
@@ -67,6 +83,80 @@ function mostrarSkins(skins) {
 
         contenedorSkins.appendChild(tarjeta);
     });
+
+    renderizarBotonesPaginacion(totalPaginas, skins);
+}
+
+function renderizarBotonesPaginacion(totalPaginas, skinsCompletas) {
+    contenedorPaginacion.innerHTML = '';
+
+    if (totalPaginas <= 1) return;
+
+    const maxBotones = 5;
+    let paginaInicio = Math.max(1, paginaActual - 2);
+    let paginaFin = Math.min(totalPaginas, paginaInicio + maxBotones - 1);
+
+    if (paginaFin - paginaInicio + 1 < maxBotones) {
+        paginaInicio = Math.max(1, paginaFin - maxBotones + 1);
+    }
+
+    // Botón Anterior
+    if (paginaActual > 1) {
+        const btnAnterior = document.createElement('button');
+        btnAnterior.textContent = '« Ant';
+        establecerEstilosBotonPaginacion(btnAnterior, false);
+        btnAnterior.addEventListener('click', () => {
+            paginaActual--;
+            mostrarSkins(skinsCompletas);
+            contenedorSkins.scrollIntoView({ behavior: 'smooth' });
+        });
+        contenedorPaginacion.appendChild(btnAnterior);
+    }
+
+    // Botones Numéricos
+    for (let i = paginaInicio; i <= paginaFin; i++) {
+        const boton = document.createElement('button');
+        boton.textContent = i;
+        establecerEstilosBotonPaginacion(boton, i === paginaActual);
+
+        boton.addEventListener('click', () => {
+            paginaActual = i;
+            mostrarSkins(skinsCompletas);
+            contenedorSkins.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        contenedorPaginacion.appendChild(boton);
+    }
+
+    // Botón Siguiente
+    if (paginaActual < totalPaginas) {
+        const btnSiguiente = document.createElement('button');
+        btnSiguiente.textContent = 'Sig »';
+        establecerEstilosBotonPaginacion(btnSiguiente, false);
+        btnSiguiente.addEventListener('click', () => {
+            paginaActual++;
+            mostrarSkins(skinsCompletas);
+            contenedorSkins.scrollIntoView({ behavior: 'smooth' });
+        });
+        contenedorPaginacion.appendChild(btnSiguiente);
+    }
+}
+
+function establecerEstilosBotonPaginacion(boton, esActivo) {
+    boton.style.margin = '0 5px';
+    boton.style.padding = '8px 12px';
+    boton.style.cursor = 'pointer';
+    boton.style.fontWeight = 'bold';
+    boton.style.borderRadius = '4px';
+    boton.style.border = '1px solid #444';
+    
+    if (esActivo) {
+        boton.style.backgroundColor = '#de9b35';
+        boton.style.color = '#000';
+    } else {
+        boton.style.backgroundColor = '#1e1e1e';
+        boton.style.color = '#fff';
+    }
 }
 
 function generarOpcionesArmas(skins) {
@@ -88,6 +178,7 @@ function generarOpcionesArmas(skins) {
 }
 
 function aplicarFiltros() {
+    paginaActual = 1; 
     let skinsFiltradas = todasLasSkins;
 
     const textoBuscado = buscador.value.toLowerCase();
@@ -131,10 +222,9 @@ buscador.addEventListener('input', aplicarFiltros);
 filtroArma.addEventListener('change', aplicarFiltros);
 selectorOrdenar.addEventListener('change', aplicarFiltros);
 
-
 obtenerDatosAPI();
 
-
+// --- LÓGICA DEL MODAL DE INSPECCIÓN ---
 const modal = document.getElementById('modal-inspeccionar');
 const imgModal = document.getElementById('imagen-modal');
 const btnCerrar = document.querySelector('.cerrar-modal');
