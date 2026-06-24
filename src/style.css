@@ -1,6 +1,4 @@
-/* ==========================================================================
-   ESTILOS GENERALES Y BASE
-   ========================================================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -9,10 +7,10 @@
 }
 
 header {
-    background-color: #121212; /* El mismo fondo oscuro de la página */
-    padding: 20px 30px; /* Le da un poco de aire arriba y abajo para que no quede apretado */
-    border-bottom: 4.5px solid #de9b35; /* LA MAGIA: la línea amarilla de 3 píxeles */
-    margin-bottom: 3px; /* Separa la línea del resto de la página */
+    background-color: #121212; 
+    padding: 20px 30px; 
+    border-bottom: 4.5px solid #de9b35; 
+    margin-bottom: 3px; 
 }
 
 body {
@@ -20,7 +18,7 @@ body {
     color: #ffffff;
 }
 
-/* --- ENLACES DEL MENÚ (Catálogo / Mi Inventario) --- */
+
 a {
     color: #ffffff;
     text-decoration: none;
@@ -34,7 +32,7 @@ a:hover {
     color: #de9b35;
 }
 
-/* --- BANNER Y LA FRASE ADENTRO DE LA FOTO --- */
+
 .contenedor-banner {
     position: relative;
     width: 100%;
@@ -63,7 +61,7 @@ a:hover {
     pointer-events: none;
 }
 
-/* --- BARRA DE FILTROS --- */
+
 .contenedor-filtros {
     padding: 20px 30px 0 30px;
     text-align: left;
@@ -89,10 +87,9 @@ a:hover {
     margin-top: 40px;
 }
 
-/* --- CONTENEDOR PRINCIPAL (CATÁLOGO E INVENTARIO JUNTOS) --- */
+
 #contenedor-skins, #contenedor-inventario {
     display: grid;
-    /* Bajamos a 220px para que las tarjetas sean menos anchas y entren más armas */
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px;
     padding: 30px;
@@ -100,7 +97,7 @@ a:hover {
     margin: 0 auto;
 }
 
-/* --- TARJETAS --- */
+
 .tarjeta-skin {
     background-color: #1e1e1e;
     border: 1px solid #333;
@@ -151,7 +148,7 @@ a:hover {
     margin-bottom: 15px;
 }
 
-/* --- BOTONES (AGREGAR Y QUITAR) --- */
+
 .btn-agregar, .btn-quitar {
     width: 100%;
     background-color: #de9b35;
@@ -168,7 +165,6 @@ a:hover {
     background-color: #f5b041;
 }
 
-/* --- MODAL --- */
 .modal-oculto {
     display: none;
 }
@@ -221,9 +217,7 @@ a:hover {
         transform: translateY(0);
     }
 }
-/* ==========================================================================
-   MEDIA QUERIES (UN SOLO BLOQUE PARA CELULARES Y TABLETS)
-   ========================================================================== */
+
 @media (max-width: 768px) {
     .banner-equipo {
         height: 250px; 
