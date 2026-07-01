@@ -1,4 +1,4 @@
-// Capturamos el div vacío del HTML
+
 const contenedorInventario = document.getElementById('contenedor-inventario');
 
 function cargarInventario() {
