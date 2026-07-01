@@ -1,6 +1,6 @@
 let todasLasSkins = [];
 let paginaActual = 1;
-const itemsPorPagina = 15; // Cantidad de armas por página
+const itemsPorPagina = 15; 
 
 const contenedorSkins = document.getElementById('contenedor-skins');
 const buscador = document.getElementById('buscador');
@@ -43,11 +43,11 @@ async function obtenerDatosAPI() {
 function mostrarSkins(skins) {
     contenedorSkins.innerHTML = '';
 
-    // --- ANIMACIÓN DE TRANSICIÓN ---
+   
     contenedorSkins.classList.remove('animacion-fade'); 
     void contenedorSkins.offsetWidth; 
     contenedorSkins.classList.add('animacion-fade'); 
-    // -------------------------------
+    
 
     if (skins.length === 0) {
         contenedorSkins.innerHTML = '<p style="color: #888; grid-column: 1 / -1; text-align: center;">No se encontraron skins con esos filtros.</p>';
@@ -100,7 +100,7 @@ function renderizarBotonesPaginacion(totalPaginas, skinsCompletas) {
         paginaInicio = Math.max(1, paginaFin - maxBotones + 1);
     }
 
-    // Botón Anterior
+   
     if (paginaActual > 1) {
         const btnAnterior = document.createElement('button');
         btnAnterior.textContent = '« Ant';
@@ -113,7 +113,7 @@ function renderizarBotonesPaginacion(totalPaginas, skinsCompletas) {
         contenedorPaginacion.appendChild(btnAnterior);
     }
 
-    // Botones Numéricos
+    
     for (let i = paginaInicio; i <= paginaFin; i++) {
         const boton = document.createElement('button');
         boton.textContent = i;
@@ -128,7 +128,7 @@ function renderizarBotonesPaginacion(totalPaginas, skinsCompletas) {
         contenedorPaginacion.appendChild(boton);
     }
 
-    // Botón Siguiente
+    
     if (paginaActual < totalPaginas) {
         const btnSiguiente = document.createElement('button');
         btnSiguiente.textContent = 'Sig »';
@@ -224,7 +224,7 @@ selectorOrdenar.addEventListener('change', aplicarFiltros);
 
 obtenerDatosAPI();
 
-// --- LÓGICA DEL MODAL DE INSPECCIÓN ---
+
 const modal = document.getElementById('modal-inspeccionar');
 const imgModal = document.getElementById('imagen-modal');
 const btnCerrar = document.querySelector('.cerrar-modal');
